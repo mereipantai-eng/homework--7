@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Math Differentiator - Trigonometry</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX CSS & JS for LaTeX Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <style>
+        .active-tab {
+            border-bottom: 3px solid #2563EB;
+            color: #1D4ED8;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col">
+
+    <!-- Header & API Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div>
+                <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <span>📐</span> AI Math Differentiator
+                </h1>
+                <p class="text-xs text-slate-500">Topic: Trigonometry & Right Triangle Geometry</p>
+            </div>
+            
+            <!-- Optional API Key Input -->
+            <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg border border-slate-200 text-xs">
+                <span class="text-slate-600 font-medium">OpenAI Key:</span>
+                <input type="password" id="apiKeyInput" placeholder="sk-... (Optional)" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 w-36 sm:w-48">
+                <span class="text-slate-400 text-[10px]">(Demo Mode Active)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <!-- Topic Banner -->
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 rounded-2xl shadow-sm mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="inline-block bg-blue-500/30 text-blue-100 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Topic 8: AI Differentiated Learning</span>
+                    <h2 class="text-2xl font-extrabold">Trigonometric Ratios & Elevation Angles</h2>
+                    <p class="text-blue-100 text-sm mt-1 max-w-2xl">
+                        Adapting core trigonometric principles ($\sin \theta$, $\cos \theta$, $\tan \theta$) into multi-tier challenges with adaptive scaffolding.
+                    </p>
+                </div>
+                <button id="generateBtn" onclick="generateProblem()" class="bg-white text-blue-700 hover:bg-blue-50 font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm flex items-center gap-2 whitespace-nowrap">
+                    <span>✨</span> Generate AI Problem
+                </button>
+            </div>
+        </div>
+
+        <!-- Level Selector Tabs -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8">
+            <div class="flex border-b border-slate-200 bg-slate-50/50 overflow-x-auto">
+                <button onclick="switchLevel(1)" id="tab-1" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center active-tab">
+                    Level 1: Foundation
+                </button>
+                <button onclick="switchLevel(2)" id="tab-2" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
+                    Level 2: Standard
+                </button>
+                <button onclick="switchLevel(3)" id="tab-3" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
+                    Level 3: Advanced
+                </button>
+            </div>
+
+            <!-- Problem Presentation Area -->
+            <div class="p-6 sm:p-8">
+                <!-- Level Badge -->
+                <div class="flex items-center justify-between mb-4">
+                    <span id="levelBadge" class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
+                        Foundation Level • Direct Ratios & Visual Scaffolding
+                    </span>
+                    <span id="loadingSpinner" class="hidden text-xs text-blue-600 animate-pulse flex items-center gap-1">
+                        <svg class="animate-spin h-4 w-4 text-blue-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                        AI Generating Task...
+                    </span>
+                </div>
+
+                <!-- Problem Statement -->
+                <div class="mb-6">
+                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Trigonometry Task</h3>
+                    <div id="problemContainer" class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed bg-slate-50 p-5 rounded-xl border border-slate-100 min-h-[80px]">
+                        Loading problem...
+                    </div>
+                </div>
+
+                <!-- Scaffolded Hints -->
+                <div class="mb-6">
+                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Adaptive Scaffolding & Hints</h3>
+                    <div id="hintsContainer" class="space-y-3">
+                        <!-- Dynamic Hints -->
+                    </div>
+                </div>
+
+                <!-- Detailed Solution Accordion -->
+                <div class="border-t border-slate-200 pt-6">
+                    <button onclick="toggleSolution()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl text-sm transition flex justify-between items-center">
+                        <span>📖 View Step-by-Step Solution</span>
+                        <span id="solutionArrow">▼</span>
+                    </button>
+                    <div id="solutionBox" class="hidden mt-4 p-5 bg-blue-50/50 rounded-xl border border-blue-100 text-slate-700 text-sm leading-relaxed space-y-3">
+                        <!-- Dynamic Solution -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        Course: Educational Technology & AI • Topic 8: AI for Differentiated Learning
+    </footer>
+
+    <!-- JS Application Logic -->
+    <script>
+        let currentLevel = 1;
+
+        // Trigonometry Data Structured by Difficulty Level
+        const trigData = {
+            1: {
+                levelTitle: "Level 1: Foundation • Direct Trigonometric Ratios",
+                badgeClass: "bg-emerald-100 text-emerald-800",
+                problem: "A right triangle has an angle of $30^\\circ$ and a hypotenuse of length $10\\text{ meters}$.<br><br>Calculate the length of the **opposite side** ($h$) facing the $30^\\circ$ angle using the sine ratio.",
+                hints: [
+                    "Recall the SOH-CAH-TOA rule for sine: $\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$.",
+                    "Substitute the given values into the formula: $\\sin(30^\\circ) = \\frac{h}{10}$.",
+                    "Note that $\\sin(30^\\circ) = 0.5$. Multiply both sides by $10$ to isolate $h$."
+                ],
+                solution: "1. **Identify Given Values:**<br> - Angle $\\theta = 30^\\circ$<br> - Hypotenuse $= 10\\text{ m}$<br> - Opposite $= h$<br><br>2. **Set up Sine Equation:** $$\\sin(30^\\circ) = \\frac{h}{10}$$<br>3. **Solve for $h$:** $$0.5 = \\frac{h}{10} \\implies h = 0.5 \\times 10 = 5\\text{ meters}$$<br><br>**Answer:** The opposite side length is **$5\\text{ meters}$**."
+            },
+            2: {
+                levelTitle: "Level 2: Standard • Grade-Level Angle of Elevation",
+                badgeClass: "bg-blue-100 text-blue-800",
+                problem: "A surveyor stands $50\\text{ meters}$ away from the base of a building. Looking through a transit at eye level ($1.5\\text{ meters}$ above ground), the angle of elevation to the top of the building is $37^\\circ$.<br><br>Calculate the total height of the building. (Use $\\tan(37^\\circ) \\approx 0.7536$).",
+                hints: [
+                    "Identify the right triangle above eye level: the adjacent side is $50\\text{ m}$ and the opposite side is $x$ (height above eye level).",
+                    "Use tangent: $\\tan(37^\\circ) = \\frac{\\text{Opposite}}{\\text{Adjacent}} = \\frac{x}{50}$.",
+                    "Calculate $x = 50 \\times 0.7536$, then add the eye height ($1.5\\text{ m}$) to find total building height."
+                ],
+                solution: "1. **Calculate Height Above Eye Level ($x$):** $$\\tan(37^\\circ) = \\frac{x}{50} \\implies x = 50 \\times 0.7536 = 37.68\\text{ meters}$$<br>2. **Add Observer Eye Height:** $$\\text{Total Height} = x + 1.5 = 37.68 + 1.5 = 39.18\\text{ meters}$$<br><br>**Answer:** The building height is **$39.18\\text{ meters}$**."
+            },
+            3: {
+                levelTitle: "Level 3: Advanced • Multi-Step Bearings & Dual Triangles",
+                badgeClass: "bg-purple-100 text-purple-800",
+                problem: "A lighthouse keeper observes two ships inline directly west. The angles of depression to Ship A and Ship B from the top of the $120\\text{-meter}$ cliff are $25^\\circ$ and $40^\\circ$ respectively.<br><br>Determine the distance between the two ships. (Use $\\tan(25^\\circ) \\approx 0.4663$ and $\\tan(40^\\circ) \\approx 0.8391$).",
+                hints: [
+                    "The angle of depression equals the angle of elevation from each ship looking up at the cliff.",
+                    "Set up two tangent equations for the distances from the cliff base: $d_A = \\frac{120}{\\tan(25^\\circ)}$ and $d_B = \\frac{120}{\\tan(40^\\circ)}$.",
+                    "Subtract the closer distance from the farther distance: $\\text{Distance between ships} = d_A - d_B$."
+                ],
+                solution: "1. **Distance to Ship A (Farther):** $$d_A = \\frac{120}{\\tan(25^\\circ)} = \\frac{120}{0.4663} \\approx 257.34\\text{ meters}$$<br>2. **Distance to Ship B (Closer):** $$d_B = \\frac{120}{\\tan(40^\\circ)} = \\frac{120}{0.8391} \\approx 143.01\\text{ meters}$$<br>3. **Calculate Separation Distance:** $$\\Delta d = d_A - d_B = 257.34 - 143.01 = 114.33\\text{ meters}$$<br><br>**Answer:** The distance between the ships is **$114.33\\text{ meters}$**."
+            }
+        };
+
+        function switchLevel(level) {
+            currentLevel = level;
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (i === level) {
+                    tab.classList.add('active-tab');
+                } else {
+                    tab.classList.remove('active-tab');
+                }
+            }
+            document.getElementById('solutionBox').classList.add('hidden');
+            document.getElementById('solutionArrow').innerText = "▼";
+            renderCurrentContent();
+        }
+
+        function renderCurrentContent() {
+            const data = trigData[currentLevel];
+            
+            const badge = document.getElementById('levelBadge');
+            badge.className = `text-xs font-semibold px-3 py-1 rounded-full ${data.badgeClass}`;
+            badge.innerText = data.levelTitle;
+
+            document.getElementById('problemContainer').innerHTML = data.problem;
+
+            const hintsContainer = document.getElementById('hintsContainer');
+            hintsContainer.innerHTML = '';
+            data.hints.forEach((hint, index) => {
+                const hintDiv = document.createElement('div');
+                hintDiv.className = "bg-white border border-slate-200 rounded-lg p-3 text-sm";
+                hintDiv.innerHTML = `
+                    <button onclick="toggleHint(${index})" class="w-full text-left font-medium text-slate-700 flex justify-between items-center">
+                        <span>💡 Hint ${index + 1}</span>
+                        <span id="hintArrow-${index}" class="text-xs text-blue-600">Show</span>
+                    </button>
+                    <div id="hintBody-${index}" class="hidden mt-2 text-slate-600 border-t border-slate-100 pt-2">
+                        ${hint}
+                    </div>
+                `;
+                hintsContainer.appendChild(hintDiv);
+            });
+
+            document.getElementById('solutionBox').innerHTML = data.solution;
+
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+            }
+        }
+
+        function toggleHint(index) {
+            const body = document.getElementById(`hintBody-${index}`);
+            const arrow = document.getElementById(`hintArrow-${index}`);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                arrow.innerText = "Hide";
+            } else {
+                body.classList.add('hidden');
+                arrow.innerText = "Show";
+            }
+        }
+
+        function toggleSolution() {
+            const box = document.getElementById('solutionBox');
+            const arrow = document.getElementById('solutionArrow');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                arrow.innerText = "▲";
+            } else {
+                box.classList.add('hidden');
+                arrow.innerText = "▼";
+            }
+        }
+
+        async function generateProblem() {
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
+            const spinner = document.getElementById('loadingSpinner');
+
+            if (!apiKey) {
+                spinner.classList.remove('hidden');
+                setTimeout(() => {
+                    spinner.classList.add('hidden');
+                    renderCurrentContent();
+                }, 500);
+                return;
+            }
+
+            spinner.classList.remove('hidden');
+            try {
+                const prompt = `Generate a ${currentLevel == 1 ? 'Foundation' : currentLevel == 2 ? 'Standard' : 'Advanced'} trigonometry math problem. Output valid JSON with keys: problem, hint1, hint2, hint3, solution. Use LaTeX math notation ($...$ or $$...$$).`;
+
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-4o-mini",
+                        messages: [{ role: "user", content: prompt }],
+                        response_format: { type: "json_object" }
+                    })
+                });
+
+                const resData = await response.json();
+                const aiResult = JSON.parse(resData.choices[0].message.content);
+
+                trigData[currentLevel].problem = aiResult.problem;
+                trigData[currentLevel].hints = [aiResult.hint1, aiResult.hint2, aiResult.hint3];
+                trigData[currentLevel].solution = aiResult.solution;
+
+                renderCurrentContent();
+            } catch (err) {
+                alert("Error connecting to API. Check console or key.");
+                console.error(err);
+            } finally {
+                spinner.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            switchLevel(1);
+        });
+    </script>
+</body>
+</html>
