@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Math Differentiator - Quadratic Functions</title>
+    <title>AI Math Differentiator - Trigonometry</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- KaTeX CSS & JS for LaTeX Math Rendering -->
@@ -12,29 +12,29 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <style>
         .active-tab {
-            border-bottom: 3px solid #3B82F6;
+            border-bottom: 3px solid #2563EB;
             color: #1D4ED8;
-            font-weight: 600;
+            font-weight: 700;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col">
 
-    <!-- Header / Navigation -->
+    <!-- Header & API Bar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
             <div>
                 <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <span>🧮</span> AI Math Differentiator
+                    <span>📐</span> AI Math Differentiator
                 </h1>
-                <p class="text-xs text-slate-500">Adaptive Educational Technology Platform</p>
+                <p class="text-xs text-slate-500">Topic: Trigonometry & Right Triangle Geometry</p>
             </div>
             
-            <!-- API Key Input Section -->
+            <!-- Optional API Key Input -->
             <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg border border-slate-200 text-xs">
                 <span class="text-slate-600 font-medium">OpenAI Key:</span>
                 <input type="password" id="apiKeyInput" placeholder="sk-... (Optional)" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 w-36 sm:w-48">
-                <span class="text-slate-400 text-[10px]" title="If empty, built-in dynamic simulated response is used">(Demo Mode)</span>
+                <span class="text-slate-400 text-[10px]">(Demo Mode Active)</span>
             </div>
         </div>
     </header>
@@ -43,17 +43,17 @@
     <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
         
         <!-- Topic Banner -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-sm mb-8">
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 rounded-2xl shadow-sm mb-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <span class="inline-block bg-blue-500/30 text-blue-100 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Topic 8: Differentiated Learning</span>
-                    <h2 class="text-2xl font-extrabold">Quadratic Kinematics: Vertical Motion</h2>
+                    <span class="inline-block bg-blue-500/30 text-blue-100 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Topic 8: AI Differentiated Learning</span>
+                    <h2 class="text-2xl font-extrabold">Trigonometric Ratios & Elevation Angles</h2>
                     <p class="text-blue-100 text-sm mt-1 max-w-2xl">
-                        Explore how a single core concept ($h(t) = -5t^2 + v_0 t + h_0$) dynamically adapts across cognitive levels with scaffolded AI support.
+                        Adapting core trigonometric principles ($\sin \theta$, $\cos \theta$, $\tan \theta$) into multi-tier challenges with adaptive scaffolding.
                     </p>
                 </div>
                 <button id="generateBtn" onclick="generateProblem()" class="bg-white text-blue-700 hover:bg-blue-50 font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm flex items-center gap-2 whitespace-nowrap">
-                    <span>✨</span> Generate New Problem
+                    <span>✨</span> Generate AI Problem
                 </button>
             </div>
         </div>
@@ -61,13 +61,13 @@
         <!-- Level Selector Tabs -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8">
             <div class="flex border-b border-slate-200 bg-slate-50/50 overflow-x-auto">
-                <button onclick="switchLevel(1)" id="tab-1" class="flex-1 min-w-[150px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center active-tab">
+                <button onclick="switchLevel(1)" id="tab-1" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center active-tab">
                     Level 1: Foundation
                 </button>
-                <button onclick="switchLevel(2)" id="tab-2" class="flex-1 min-w-[150px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
+                <button onclick="switchLevel(2)" id="tab-2" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
                     Level 2: Standard
                 </button>
-                <button onclick="switchLevel(3)" id="tab-3" class="flex-1 min-w-[150px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
+                <button onclick="switchLevel(3)" id="tab-3" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
                     Level 3: Advanced
                 </button>
             </div>
@@ -77,38 +77,38 @@
                 <!-- Level Badge -->
                 <div class="flex items-center justify-between mb-4">
                     <span id="levelBadge" class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
-                        Foundation Level • Scaffolded Support
+                        Foundation Level • Direct Ratios & Visual Scaffolding
                     </span>
                     <span id="loadingSpinner" class="hidden text-xs text-blue-600 animate-pulse flex items-center gap-1">
                         <svg class="animate-spin h-4 w-4 text-blue-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                        AI Generating Math Logic...
+                        AI Generating Task...
                     </span>
                 </div>
 
                 <!-- Problem Statement -->
                 <div class="mb-6">
-                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Problem Statement</h3>
+                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Trigonometry Task</h3>
                     <div id="problemContainer" class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed bg-slate-50 p-5 rounded-xl border border-slate-100 min-h-[80px]">
                         Loading problem...
                     </div>
                 </div>
 
-                <!-- Guidance & Interactive Hints -->
+                <!-- Scaffolded Hints -->
                 <div class="mb-6">
-                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Scaffolded Hints & Scaffolding</h3>
+                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Adaptive Scaffolding & Hints</h3>
                     <div id="hintsContainer" class="space-y-3">
-                        <!-- Hints dynamically populated -->
+                        <!-- Dynamic Hints -->
                     </div>
                 </div>
 
                 <!-- Detailed Solution Accordion -->
                 <div class="border-t border-slate-200 pt-6">
                     <button onclick="toggleSolution()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl text-sm transition flex justify-between items-center">
-                        <span>📖 View Full AI Step-by-Step Solution</span>
+                        <span>📖 View Step-by-Step Solution</span>
                         <span id="solutionArrow">▼</span>
                     </button>
                     <div id="solutionBox" class="hidden mt-4 p-5 bg-blue-50/50 rounded-xl border border-blue-100 text-slate-700 text-sm leading-relaxed space-y-3">
-                        <!-- Solution populated via JS -->
+                        <!-- Dynamic Solution -->
                     </div>
                 </div>
             </div>
@@ -118,54 +118,52 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
-        Course: Educational Technology & AI • Individual Assignment: Web-Based AI Math Differentiator
+        Course: Educational Technology & AI • Topic 8: AI for Differentiated Learning
     </footer>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JS Application Logic -->
     <script>
         let currentLevel = 1;
 
-        // Structured Pre-Engineered Adaptive Content (Used in Demo Mode if API Key is not provided)
-        const problemData = {
+        // Trigonometry Data Structured by Difficulty Level
+        const trigData = {
             1: {
-                levelTitle: "Foundation Level • Scaffolded Support",
+                levelTitle: "Level 1: Foundation • Direct Trigonometric Ratios",
                 badgeClass: "bg-emerald-100 text-emerald-800",
-                problem: "A ball is thrown directly upward from ground level. Its height $h$ in meters after $t$ seconds is given by the simplified function: <br><br>$$h(t) = -5t^2 + 20t$$<br>Find how many seconds ($t$) it takes for the ball to return back to the ground ($h = 0$).",
+                problem: "A right triangle has an angle of $30^\\circ$ and a hypotenuse of length $10\\text{ meters}$.<br><br>Calculate the length of the **opposite side** ($h$) facing the $30^\\circ$ angle using the sine ratio.",
                 hints: [
-                    "Set the height $h(t)$ equal to 0: $-5t^2 + 20t = 0$.",
-                    "Factor out common terms: $t(-5t + 20) = 0$.",
-                    "Solve for $t$: either $t = 0$ (start) or $-5t + 20 = 0$."
+                    "Recall the SOH-CAH-TOA rule for sine: $\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$.",
+                    "Substitute the given values into the formula: $\\sin(30^\\circ) = \\frac{h}{10}$.",
+                    "Note that $\\sin(30^\\circ) = 0.5$. Multiply both sides by $10$ to isolate $h$."
                 ],
-                solution: "1. **Set $h(t) = 0$:** $$-5t^2 + 20t = 0$$<br>2. **Factor out $t$:** $$t(-5t + 20) = 0$$<br>3. **Find the roots:**<br> - Root 1: $t = 0$ seconds (Launch time)<br> - Root 2: $-5t + 20 = 0 \\implies 5t = 20 \\implies t = 4$ seconds.<br><br>**Answer:** The ball returns to the ground at **$t = 4$ seconds**."
+                solution: "1. **Identify Given Values:**<br> - Angle $\\theta = 30^\\circ$<br> - Hypotenuse $= 10\\text{ m}$<br> - Opposite $= h$<br><br>2. **Set up Sine Equation:** $$\\sin(30^\\circ) = \\frac{h}{10}$$<br>3. **Solve for $h$:** $$0.5 = \\frac{h}{10} \\implies h = 0.5 \\times 10 = 5\\text{ meters}$$<br><br>**Answer:** The opposite side length is **$5\\text{ meters}$**."
             },
             2: {
-                levelTitle: "Standard Grade-Level • Real-World Context",
+                levelTitle: "Level 2: Standard • Grade-Level Angle of Elevation",
                 badgeClass: "bg-blue-100 text-blue-800",
-                problem: "A model rocket is launched vertically from an elevated platform $35$ meters above the ground with an initial velocity of $30\\text{ m/s}$. Its height is given by:<br><br>$$h(t) = -5t^2 + 30t + 35$$<br>Calculate the maximum height reached by the rocket and the exact time it hits the ground.",
+                problem: "A surveyor stands $50\\text{ meters}$ away from the base of a building. Looking through a transit at eye level ($1.5\\text{ meters}$ above ground), the angle of elevation to the top of the building is $37^\\circ$.<br><br>Calculate the total height of the building. (Use $\\tan(37^\\circ) \\approx 0.7536$).",
                 hints: [
-                    "Find time to peak height using $t = -b / (2a)$ where $a = -5, b = 30$.",
-                    "Substitute peak $t$ back into $h(t)$ to find max height.",
-                    "To find total flight time, solve $h(t) = 0$ using the quadratic formula or factoring."
+                    "Identify the right triangle above eye level: the adjacent side is $50\\text{ m}$ and the opposite side is $x$ (height above eye level).",
+                    "Use tangent: $\\tan(37^\\circ) = \\frac{\\text{Opposite}}{\\text{Adjacent}} = \\frac{x}{50}$.",
+                    "Calculate $x = 50 \\times 0.7536$, then add the eye height ($1.5\\text{ m}$) to find total building height."
                 ],
-                solution: "1. **Time to Vertex (Peak):** $$t = -\\frac{b}{2a} = -\\frac{30}{2(-5)} = 3\\text{ seconds}$$<br>2. **Maximum Height:** $$h(3) = -5(3)^2 + 30(3) + 35 = -45 + 90 + 35 = 80\\text{ meters}$$<br>3. **Total Flight Time ($h(t) = 0$):** $$-5t^2 + 30t + 35 = 0 \\implies t^2 - 6t - 7 = 0$$ $$(t - 7)(t + 1) = 0$$<br>Since time cannot be negative, $t = 7$ seconds.<br><br>**Answer:** Max height is **$80$ meters**, total flight time is **$7$ seconds**."
+                solution: "1. **Calculate Height Above Eye Level ($x$):** $$\\tan(37^\\circ) = \\frac{x}{50} \\implies x = 50 \\times 0.7536 = 37.68\\text{ meters}$$<br>2. **Add Observer Eye Height:** $$\\text{Total Height} = x + 1.5 = 37.68 + 1.5 = 39.18\\text{ meters}$$<br><br>**Answer:** The building height is **$39.18\\text{ meters}$**."
             },
             3: {
-                levelTitle: "Advanced Level • Multi-Step Optimization",
+                levelTitle: "Level 3: Advanced • Multi-Step Bearings & Dual Triangles",
                 badgeClass: "bg-purple-100 text-purple-800",
-                problem: "A drone launches an emergency package from an elevation of $10$ meters. The package height follows $h(t) = -5t^2 + v_0 t + 10$. An defense barrier at $x = 15$ meters horizontal distance requires the package to clear a wall of height $35$ meters at exactly $t = 1$ second.<br><br>Determine required launch velocity $v_0$, max height achieved, and time spent above $30$ meters.",
+                problem: "A lighthouse keeper observes two ships inline directly west. The angles of depression to Ship A and Ship B from the top of the $120\\text{-meter}$ cliff are $25^\\circ$ and $40^\\circ$ respectively.<br><br>Determine the distance between the two ships. (Use $\\tan(25^\\circ) \\approx 0.4663$ and $\\tan(40^\\circ) \\approx 0.8391$).",
                 hints: [
-                    "Substitute $t = 1$ and $h(1) = 35$ to find required $v_0$.",
-                    "With $v_0$ known, write the complete height function and locate vertex height.",
-                    "Set $h(t) = 30$ and solve for $t_1$ and $t_2$; the duration above $30\\text{m}$ is $t_2 - t_1$."
+                    "The angle of depression equals the angle of elevation from each ship looking up at the cliff.",
+                    "Set up two tangent equations for the distances from the cliff base: $d_A = \\frac{120}{\\tan(25^\\circ)}$ and $d_B = \\frac{120}{\\tan(40^\\circ)}$.",
+                    "Subtract the closer distance from the farther distance: $\\text{Distance between ships} = d_A - d_B$."
                 ],
-                solution: "1. **Solve for $v_0$:** $$35 = -5(1)^2 + v_0(1) + 10 \\implies 35 = 5 + v_0 \\implies v_0 = 30\\text{ m/s}$$<br>2. **Equation:** $$h(t) = -5t^2 + 30t + 10$$<br>3. **Max Height:** Vertex at $t = 3\\text{ s}$, $h(3) = -5(9) + 90 + 10 = 55\\text{ m}$.<br>4. **Duration above 30m:** $$-5t^2 + 30t + 10 = 30 \\implies -5t^2 + 30t - 20 = 0 \\implies t^2 - 6t + 4 = 0$$ Using quadratic formula: $t = 3 \\pm \\sqrt{5}\\text{ s}$. <br>Time duration = $(3 + \\sqrt{5}) - (3 - \\sqrt{5}) = 2\\sqrt{5} \\approx 4.47\\text{ seconds}$."
+                solution: "1. **Distance to Ship A (Farther):** $$d_A = \\frac{120}{\\tan(25^\\circ)} = \\frac{120}{0.4663} \\approx 257.34\\text{ meters}$$<br>2. **Distance to Ship B (Closer):** $$d_B = \\frac{120}{\\tan(40^\\circ)} = \\frac{120}{0.8391} \\approx 143.01\\text{ meters}$$<br>3. **Calculate Separation Distance:** $$\\Delta d = d_A - d_B = 257.34 - 143.01 = 114.33\\text{ meters}$$<br><br>**Answer:** The distance between the ships is **$114.33\\text{ meters}$**."
             }
         };
 
         function switchLevel(level) {
             currentLevel = level;
-            
-            // Update Active Tabs
             for (let i = 1; i <= 3; i++) {
                 const tab = document.getElementById(`tab-${i}`);
                 if (i === level) {
@@ -174,26 +172,20 @@
                     tab.classList.remove('active-tab');
                 }
             }
-
-            // Hide solution when changing levels
             document.getElementById('solutionBox').classList.add('hidden');
             document.getElementById('solutionArrow').innerText = "▼";
-
             renderCurrentContent();
         }
 
         function renderCurrentContent() {
-            const data = problemData[currentLevel];
+            const data = trigData[currentLevel];
             
-            // Render Badge
             const badge = document.getElementById('levelBadge');
             badge.className = `text-xs font-semibold px-3 py-1 rounded-full ${data.badgeClass}`;
             badge.innerText = data.levelTitle;
 
-            // Render Problem
             document.getElementById('problemContainer').innerHTML = data.problem;
 
-            // Render Hints
             const hintsContainer = document.getElementById('hintsContainer');
             hintsContainer.innerHTML = '';
             data.hints.forEach((hint, index) => {
@@ -211,10 +203,8 @@
                 hintsContainer.appendChild(hintDiv);
             });
 
-            // Render Solution
             document.getElementById('solutionBox').innerHTML = data.solution;
 
-            // Trigger KaTeX Math Rendering
             if (window.renderMathInElement) {
                 renderMathInElement(document.body, {
                     delimiters: [
@@ -254,19 +244,17 @@
             const spinner = document.getElementById('loadingSpinner');
 
             if (!apiKey) {
-                // If no API key provided, emulate AI generation smoothly
                 spinner.classList.remove('hidden');
                 setTimeout(() => {
                     spinner.classList.add('hidden');
                     renderCurrentContent();
-                }, 600);
+                }, 500);
                 return;
             }
 
-            // Real OpenAI API Integration if Key is provided
             spinner.classList.remove('hidden');
             try {
-                const prompt = `Generate a ${currentLevel == 1 ? 'Foundation' : currentLevel == 2 ? 'Standard' : 'Advanced'} quadratic kinematics math problem ($h(t) = -5t^2 + v0*t + h0$). Return JSON format with keys: problem, hint1, hint2, hint3, solution. Use standard LaTeX syntax ($...$ or $$...$$) for math equations.`;
+                const prompt = `Generate a ${currentLevel == 1 ? 'Foundation' : currentLevel == 2 ? 'Standard' : 'Advanced'} trigonometry math problem. Output valid JSON with keys: problem, hint1, hint2, hint3, solution. Use LaTeX math notation ($...$ or $$...$$).`;
 
                 const response = await fetch("https://api.openai.com/v1/chat/completions", {
                     method: "POST",
@@ -284,23 +272,23 @@
                 const resData = await response.json();
                 const aiResult = JSON.parse(resData.choices[0].message.content);
 
-                problemData[currentLevel].problem = aiResult.problem;
-                problemData[currentLevel].hints = [aiResult.hint1, aiResult.hint2, aiResult.hint3];
-                problemData[currentLevel].solution = aiResult.solution;
+                trigData[currentLevel].problem = aiResult.problem;
+                trigData[currentLevel].hints = [aiResult.hint1, aiResult.hint2, aiResult.hint3];
+                trigData[currentLevel].solution = aiResult.solution;
 
                 renderCurrentContent();
             } catch (err) {
-                alert("Error contacting OpenAI API. Please check your key or console.");
+                alert("Error connecting to API. Check console or key.");
                 console.error(err);
             } finally {
                 spinner.classList.add('hidden');
             }
         }
 
-        // Initialize default view
         document.addEventListener("DOMContentLoaded", () => {
             switchLevel(1);
         });
     </script>
 </body>
 </html>
+
