@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Math Differentiator - Trigonometry</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- KaTeX CSS & JS for LaTeX Math Rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
@@ -16,11 +14,13 @@
             color: #1D4ED8;
             font-weight: 700;
         }
+        .triangle-svg {
+            background: linear-gradient(180deg, rgba(15,23,42,0.02), transparent);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col">
 
-    <!-- Header & API Bar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
             <div>
@@ -29,136 +29,119 @@
                 </h1>
                 <p class="text-xs text-slate-500">Topic: Trigonometry & Right Triangle Geometry</p>
             </div>
-            
-            <!-- Optional API Key Input -->
+
             <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg border border-slate-200 text-xs">
                 <span class="text-slate-600 font-medium">OpenAI Key:</span>
-                <input type="password" id="apiKeyInput" placeholder="sk-... (Optional)" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 w-36 sm:w-48">
+                <input type="password" id="apiKeyInput" placeholder="sk-... (Optional)" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-300">
                 <span class="text-slate-400 text-[10px]">(Demo Mode Active)</span>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
-        
-        <!-- Topic Banner -->
-        <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 rounded-2xl shadow-sm mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <span class="inline-block bg-blue-500/30 text-blue-100 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Topic 8: AI Differentiated Learning</span>
-                    <h2 class="text-2xl font-extrabold">Trigonometric Ratios & Elevation Angles</h2>
-                    <p class="text-blue-100 text-sm mt-1 max-w-2xl">
-                        Adapting core trigonometric principles ($\sin \theta$, $\cos \theta$, $\tan \theta$) into multi-tier challenges with adaptive scaffolding.
-                    </p>
-                </div>
-                <button id="generateBtn" onclick="generateProblem()" class="bg-white text-blue-700 hover:bg-blue-50 font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm flex items-center gap-2 whitespace-nowrap">
-                    <span>✨</span> Generate AI Problem
-                </button>
-            </div>
-        </div>
-
-        <!-- Level Selector Tabs -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8">
-            <div class="flex border-b border-slate-200 bg-slate-50/50 overflow-x-auto">
-                <button onclick="switchLevel(1)" id="tab-1" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center active-tab">
-                    Level 1: Foundation
-                </button>
-                <button onclick="switchLevel(2)" id="tab-2" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
-                    Level 2: Standard
-                </button>
-                <button onclick="switchLevel(3)" id="tab-3" class="flex-1 min-w-[160px] py-4 px-6 text-sm text-slate-600 font-medium hover:text-blue-600 transition text-center">
-                    Level 3: Advanced
-                </button>
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section class="lg:col-span-1 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <div class="mb-4">
+                <h2 class="text-lg font-extrabold">Interactive Trigonometry</h2>
+                <p class="text-sm text-slate-500">Adjust controls to see the triangle and computed values update in real time.</p>
             </div>
 
-            <!-- Problem Presentation Area -->
-            <div class="p-6 sm:p-8">
-                <!-- Level Badge -->
-                <div class="flex items-center justify-between mb-4">
-                    <span id="levelBadge" class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
-                        Foundation Level • Direct Ratios & Visual Scaffolding
-                    </span>
-                    <span id="loadingSpinner" class="hidden text-xs text-blue-600 animate-pulse flex items-center gap-1">
-                        <svg class="animate-spin h-4 w-4 text-blue-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                        AI Generating Task...
-                    </span>
+            <div class="flex gap-2 mb-4">
+                <button onclick="switchLevel(1)" id="tab-1" class="flex-1 py-2 px-3 text-sm text-slate-600 font-medium bg-slate-50 rounded active-tab">Level 1</button>
+                <button onclick="switchLevel(2)" id="tab-2" class="flex-1 py-2 px-3 text-sm text-slate-600 font-medium bg-slate-50 rounded">Level 2</button>
+                <button onclick="switchLevel(3)" id="tab-3" class="flex-1 py-2 px-3 text-sm text-slate-600 font-medium bg-slate-50 rounded">Level 3</button>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Trigonometry Task</h3>
+                <div id="problemContainer" class="text-base text-slate-800 bg-slate-50 p-4 rounded border border-slate-100 min-h-[72px]">Loading problem...</div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-xs text-slate-500 mb-1">Angle (degrees)</label>
+                <input id="angleRange" type="range" min="1" max="89" value="30" class="w-full cursor-pointer" oninput="onControlsChange()">
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                    <span id="angleLabel">30°</span>
+                    <span class="text-right">Right triangle angle (°)</span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-xs text-slate-500 mb-1">Hypotenuse (units)</label>
+                <input id="hypInput" type="number" min="0.1" step="0.1" value="10" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-blue-300" oninput="onControlsChange()">
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                    <span id="hypLabel">10 units</span>
+                    <span class="text-right">Scale the triangle</span>
+                </div>
+            </div>
+
+            <div class="mb-4 flex gap-2">
+                <button id="generateBtn" onclick="generateProblem()" class="flex-1 bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-500">✨ Generate AI Problem</button>
+                <button onclick="resetDemo()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded hover:bg-slate-200">Reset</button>
+            </div>
+
+            <div class="text-sm text-slate-600 space-y-2">
+                <div>Opposite: <strong id="oppVal">5.00</strong> units</div>
+                <div>Adjacent: <strong id="adjVal">8.66</strong> units</div>
+                <div>Sine: <strong id="sinVal">0.50</strong></div>
+                <div>Cosine: <strong id="cosVal">0.866</strong></div>
+                <div>Tangent: <strong id="tanVal">0.577</strong></div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold">Visual Triangle</h3>
+                <div class="text-xs text-slate-500">Interactive SVG + step labels</div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="p-4 bg-slate-50 rounded triangle-svg">
+                    <svg id="triangleSVG" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet" class="w-full h-72" role="img" aria-label="Right triangle illustration">
+                        <line x1="30" y1="270" x2="390" y2="270" stroke="#cbd5e1" stroke-width="2"/>
+                    </svg>
                 </div>
 
-                <!-- Problem Statement -->
-                <div class="mb-6">
-                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Trigonometry Task</h3>
-                    <div id="problemContainer" class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed bg-slate-50 p-5 rounded-xl border border-slate-100 min-h-[80px]">
-                        Loading problem...
-                    </div>
-                </div>
+                <div class="p-4 bg-slate-50 rounded">
+                    <h4 class="text-sm font-medium">Steps & Explanation</h4>
+                    <ol class="mt-2 text-sm text-slate-700 list-decimal list-inside space-y-2">
+                        <li>Pick an angle and hypotenuse.</li>
+                        <li>Opposite = hypotenuse × sin(angle).</li>
+                        <li>Adjacent = hypotenuse × cos(angle).</li>
+                        <li>The triangle updates automatically.</li>
+                    </ol>
 
-                <!-- Scaffolded Hints -->
-                <div class="mb-6">
-                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Adaptive Scaffolding & Hints</h3>
-                    <div id="hintsContainer" class="space-y-3">
-                        <!-- Dynamic Hints -->
-                    </div>
-                </div>
-
-                <!-- Detailed Solution Accordion -->
-                <div class="border-t border-slate-200 pt-6">
-                    <button onclick="toggleSolution()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl text-sm transition flex justify-between items-center">
-                        <span>📖 View Step-by-Step Solution</span>
-                        <span id="solutionArrow">▼</span>
-                    </button>
-                    <div id="solutionBox" class="hidden mt-4 p-5 bg-blue-50/50 rounded-xl border border-blue-100 text-slate-700 text-sm leading-relaxed space-y-3">
-                        <!-- Dynamic Solution -->
+                    <div class="mt-4 text-xs text-slate-500">
+                        Tip: Drag the angle slider to explore how ratios change visually.
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div id="solutionBox" class="mt-6 p-4 bg-blue-50 rounded border border-blue-100 text-sm hidden"></div>
+        </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
         Course: Educational Technology & AI • Topic 8: AI for Differentiated Learning
     </footer>
 
-    <!-- JS Application Logic -->
     <script>
         let currentLevel = 1;
 
-        // Trigonometry Data Structured by Difficulty Level
         const trigData = {
             1: {
                 levelTitle: "Level 1: Foundation • Direct Trigonometric Ratios",
-                badgeClass: "bg-emerald-100 text-emerald-800",
-                problem: "A right triangle has an angle of $30^\\circ$ and a hypotenuse of length $10\\text{ meters}$.<br><br>Calculate the length of the **opposite side** ($h$) facing the $30^\\circ$ angle using the sine ratio.",
-                hints: [
-                    "Recall the SOH-CAH-TOA rule for sine: $\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$.",
-                    "Substitute the given values into the formula: $\\sin(30^\\circ) = \\frac{h}{10}$.",
-                    "Note that $\\sin(30^\\circ) = 0.5$. Multiply both sides by $10$ to isolate $h$."
-                ],
-                solution: "1. **Identify Given Values:**<br> - Angle $\\theta = 30^\\circ$<br> - Hypotenuse $= 10\\text{ m}$<br> - Opposite $= h$<br><br>2. **Set up Sine Equation:** $$\\sin(30^\\circ) = \\frac{h}{10}$$<br>3. **Solve for $h$:** $$0.5 = \\frac{h}{10} \\implies h = 0.5 \\times 10 = 5\\text{ meters}$$<br><br>**Answer:** The opposite side length is **$5\\text{ meters}$**."
+                problem: "A right triangle has an angle of $30^\\circ$ and a hypotenuse of length $10\\text{ meters}$. Calculate the length of the opposite side.",
+                solution: "Use sine: $\\sin(30^\\circ) = \\frac{\\text{opposite}}{10}$. Since $\\sin(30^\\circ)=0.5$, opposite = $10 \\times 0.5 = 5\\text{ m}$."
             },
             2: {
-                levelTitle: "Level 2: Standard • Grade-Level Angle of Elevation",
-                badgeClass: "bg-blue-100 text-blue-800",
-                problem: "A surveyor stands $50\\text{ meters}$ away from the base of a building. Looking through a transit at eye level ($1.5\\text{ meters}$ above ground), the angle of elevation to the top of the building is $37^\\circ$.<br><br>Calculate the total height of the building. (Use $\\tan(37^\\circ) \\approx 0.7536$).",
-                hints: [
-                    "Identify the right triangle above eye level: the adjacent side is $50\\text{ m}$ and the opposite side is $x$ (height above eye level).",
-                    "Use tangent: $\\tan(37^\\circ) = \\frac{\\text{Opposite}}{\\text{Adjacent}} = \\frac{x}{50}$.",
-                    "Calculate $x = 50 \\times 0.7536$, then add the eye height ($1.5\\text{ m}$) to find total building height."
-                ],
-                solution: "1. **Calculate Height Above Eye Level ($x$):** $$\\tan(37^\\circ) = \\frac{x}{50} \\implies x = 50 \\times 0.7536 = 37.68\\text{ meters}$$<br>2. **Add Observer Eye Height:** $$\\text{Total Height} = x + 1.5 = 37.68 + 1.5 = 39.18\\text{ meters}$$<br><br>**Answer:** The building height is **$39.18\\text{ meters}$**."
+                levelTitle: "Level 2: Standard • Angle of Elevation",
+                problem: "A surveyor is $50\\text{ m}$ from a building and sees the top at an angle of elevation of $37^\\circ$. Find the building height above eye level.",
+                solution: "Use tangent: $\\tan(37^\\circ)=\\frac{x}{50}$. Since $\\tan(37^\\circ) \\approx 0.7536$, $x = 50(0.7536) \\approx 37.68\\text{ m}$."
             },
             3: {
-                levelTitle: "Level 3: Advanced • Multi-Step Bearings & Dual Triangles",
-                badgeClass: "bg-purple-100 text-purple-800",
-                problem: "A lighthouse keeper observes two ships inline directly west. The angles of depression to Ship A and Ship B from the top of the $120\\text{-meter}$ cliff are $25^\\circ$ and $40^\\circ$ respectively.<br><br>Determine the distance between the two ships. (Use $\\tan(25^\\circ) \\approx 0.4663$ and $\\tan(40^\\circ) \\approx 0.8391$).",
-                hints: [
-                    "The angle of depression equals the angle of elevation from each ship looking up at the cliff.",
-                    "Set up two tangent equations for the distances from the cliff base: $d_A = \\frac{120}{\\tan(25^\\circ)}$ and $d_B = \\frac{120}{\\tan(40^\\circ)}$.",
-                    "Subtract the closer distance from the farther distance: $\\text{Distance between ships} = d_A - d_B$."
-                ],
-                solution: "1. **Distance to Ship A (Farther):** $$d_A = \\frac{120}{\\tan(25^\\circ)} = \\frac{120}{0.4663} \\approx 257.34\\text{ meters}$$<br>2. **Distance to Ship B (Closer):** $$d_B = \\frac{120}{\\tan(40^\\circ)} = \\frac{120}{0.8391} \\approx 143.01\\text{ meters}$$<br>3. **Calculate Separation Distance:** $$\\Delta d = d_A - d_B = 257.34 - 143.01 = 114.33\\text{ meters}$$<br><br>**Answer:** The distance between the ships is **$114.33\\text{ meters}$**."
+                levelTitle: "Level 3: Advanced • Multi-Step Scenario",
+                problem: "From a $120\\text{ m}$ cliff, the angles of depression to two ships are $25^\\circ$ and $40^\\circ$. Find the distance between the ships.",
+                solution: "Use $d = \\frac{120}{\\tan(\\theta)}$ for each ship and subtract: $d_1 - d_2 = \\frac{120}{\\tan(25^\\circ)} - \\frac{120}{\\tan(40^\\circ)}$."
             }
         };
 
@@ -172,123 +155,196 @@
                     tab.classList.remove('active-tab');
                 }
             }
-            document.getElementById('solutionBox').classList.add('hidden');
-            document.getElementById('solutionArrow').innerText = "▼";
             renderCurrentContent();
         }
 
         function renderCurrentContent() {
             const data = trigData[currentLevel];
-            
-            const badge = document.getElementById('levelBadge');
-            badge.className = `text-xs font-semibold px-3 py-1 rounded-full ${data.badgeClass}`;
-            badge.innerText = data.levelTitle;
-
             document.getElementById('problemContainer').innerHTML = data.problem;
-
-            const hintsContainer = document.getElementById('hintsContainer');
-            hintsContainer.innerHTML = '';
-            data.hints.forEach((hint, index) => {
-                const hintDiv = document.createElement('div');
-                hintDiv.className = "bg-white border border-slate-200 rounded-lg p-3 text-sm";
-                hintDiv.innerHTML = `
-                    <button onclick="toggleHint(${index})" class="w-full text-left font-medium text-slate-700 flex justify-between items-center">
-                        <span>💡 Hint ${index + 1}</span>
-                        <span id="hintArrow-${index}" class="text-xs text-blue-600">Show</span>
-                    </button>
-                    <div id="hintBody-${index}" class="hidden mt-2 text-slate-600 border-t border-slate-100 pt-2">
-                        ${hint}
-                    </div>
-                `;
-                hintsContainer.appendChild(hintDiv);
-            });
-
             document.getElementById('solutionBox').innerHTML = data.solution;
+            document.getElementById('solutionBox').classList.add('hidden');
 
             if (window.renderMathInElement) {
                 renderMathInElement(document.body, {
                     delimiters: [
-                        {left: "$$", right: "$$", display: true},
-                        {left: "$", right: "$", display: false}
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
                     ]
                 });
             }
         }
 
-        function toggleHint(index) {
-            const body = document.getElementById(`hintBody-${index}`);
-            const arrow = document.getElementById(`hintArrow-${index}`);
-            if (body.classList.contains('hidden')) {
-                body.classList.remove('hidden');
-                arrow.innerText = "Hide";
-            } else {
-                body.classList.add('hidden');
-                arrow.innerText = "Show";
-            }
+        function onControlsChange() {
+            const angle = Number(document.getElementById('angleRange').value);
+            const hyp = Number(document.getElementById('hypInput').value) || 1;
+            document.getElementById('angleLabel').innerText = `${angle}°`;
+            document.getElementById('hypLabel').innerText = `${hyp} units`;
+            updateValues(angle, hyp);
         }
 
-        function toggleSolution() {
-            const box = document.getElementById('solutionBox');
-            const arrow = document.getElementById('solutionArrow');
-            if (box.classList.contains('hidden')) {
-                box.classList.remove('hidden');
-                arrow.innerText = "▲";
-            } else {
-                box.classList.add('hidden');
-                arrow.innerText = "▼";
+        function updateValues(angleDeg, hyp) {
+            const angleRad = angleDeg * Math.PI / 180;
+            const opp = hyp * Math.sin(angleRad);
+            const adj = hyp * Math.cos(angleRad);
+            const sinv = Math.sin(angleRad);
+            const cosv = Math.cos(angleRad);
+            const tanv = Math.tan(angleRad);
+
+            document.getElementById('oppVal').innerText = opp.toFixed(2);
+            document.getElementById('adjVal').innerText = adj.toFixed(2);
+            document.getElementById('sinVal').innerText = sinv.toFixed(3);
+            document.getElementById('cosVal').innerText = cosv.toFixed(3);
+            document.getElementById('tanVal').innerText = tanv.toFixed(3);
+
+            drawTriangleSVG(angleDeg, hyp, adj, opp);
+        }
+
+        function drawTriangleSVG(angleDeg, hyp, adj, opp) {
+            const svg = document.getElementById('triangleSVG');
+            while (svg.lastChild && svg.lastChild.tagName !== 'line') {
+                svg.removeChild(svg.lastChild);
             }
+
+            const baseY = 270;
+            const leftX = 40;
+            const scale = Math.min(200 / Math.max(hyp, 1), 1.8);
+            const A = { x: leftX, y: baseY };
+            const B = { x: A.x + adj * scale, y: A.y };
+            const C = { x: A.x, y: A.y - opp * scale };
+
+            const hypLine = createLine(C.x, C.y, B.x, B.y, '#2563EB', 3);
+            const adjLine = createLine(A.x, A.y, B.x, B.y, '#10B981', 3);
+            const oppLine = createLine(A.x, A.y, C.x, C.y, '#F59E0B', 3);
+            const rightAngle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            rightAngle.setAttribute('d', `M ${A.x + 18} ${A.y} L ${A.x + 18} ${A.y - 18} L ${A.x} ${A.y - 18}`);
+            rightAngle.setAttribute('stroke', '#334155');
+            rightAngle.setAttribute('fill', 'none');
+            rightAngle.setAttribute('stroke-width', '2');
+
+            const arc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            arc.setAttribute('d', describeArc(A.x, A.y, 32, 0, -angleDeg));
+            arc.setAttribute('fill', 'none');
+            arc.setAttribute('stroke', '#7C3AED');
+            arc.setAttribute('stroke-width', '2');
+
+            const labels = [
+                textNode(A.x - 8, A.y + 18, 'A'),
+                textNode(B.x + 8, B.y + 18, 'B'),
+                textNode(C.x - 16, C.y - 8, 'C'),
+                textNode((A.x + C.x) / 2 - 12, (A.y + C.y) / 2, `Opp = ${opp.toFixed(2)}`),
+                textNode((A.x + B.x) / 2 - 10, A.y + 22, `Adj = ${adj.toFixed(2)}`),
+                textNode((B.x + C.x) / 2 + 8, (B.y + C.y) / 2 - 8, `Hyp = ${hyp.toFixed(2)}`),
+                textNode(A.x + 40, A.y - 12, `${angleDeg}°`)
+            ];
+
+            svg.appendChild(hypLine);
+            svg.appendChild(adjLine);
+            svg.appendChild(oppLine);
+            svg.appendChild(rightAngle);
+            svg.appendChild(arc);
+            labels.forEach(node => svg.appendChild(node));
+        }
+
+        function createLine(x1, y1, x2, y2, color, width) {
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', color);
+            line.setAttribute('stroke-width', width);
+            line.setAttribute('stroke-linecap', 'round');
+            return line;
+        }
+
+        function textNode(x, y, content) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x);
+            text.setAttribute('y', y);
+            text.setAttribute('fill', '#0f172a');
+            text.setAttribute('font-size', '12');
+            text.setAttribute('font-family', 'ui-sans-serif, system-ui, sans-serif');
+            text.textContent = content;
+            return text;
+        }
+
+        function polarToCartesian(cx, cy, radius, angle) {
+            const rad = (angle - 90) * Math.PI / 180;
+            return {
+                x: cx + radius * Math.cos(rad),
+                y: cy + radius * Math.sin(rad)
+            };
+        }
+
+        function describeArc(cx, cy, radius, startAngle, endAngle) {
+            const start = polarToCartesian(cx, cy, radius, endAngle);
+            const end = polarToCartesian(cx, cy, radius, startAngle);
+            const largeArcFlag = endAngle - startAngle <= -180 ? '1' : '0';
+            return [
+                'M', start.x, start.y,
+                'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y
+            ].join(' ');
+        }
+
+        function resetDemo() {
+            document.getElementById('angleRange').value = 30;
+            document.getElementById('hypInput').value = 10;
+            onControlsChange();
         }
 
         async function generateProblem() {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
-            const spinner = document.getElementById('loadingSpinner');
+            const btn = document.getElementById('generateBtn');
+            const oldText = btn.innerText;
+            btn.innerText = 'Generating...';
+            btn.disabled = true;
 
             if (!apiKey) {
-                spinner.classList.remove('hidden');
-                setTimeout(() => {
-                    spinner.classList.add('hidden');
-                    renderCurrentContent();
-                }, 500);
+                const angleMap = {1:30,2:37,3:25};
+                const hypMap = {1:10,2:50,3:120};
+                const angle = angleMap[currentLevel];
+                const hyp = hypMap[currentLevel];
+                document.getElementById('angleRange').value = angle;
+                document.getElementById('hypInput').value = hyp;
+                onControlsChange();
+                btn.innerText = oldText;
+                btn.disabled = false;
                 return;
             }
 
-            spinner.classList.remove('hidden');
             try {
-                const prompt = `Generate a ${currentLevel == 1 ? 'Foundation' : currentLevel == 2 ? 'Standard' : 'Advanced'} trigonometry math problem. Output valid JSON with keys: problem, hint1, hint2, hint3, solution. Use LaTeX math notation ($...$ or $$...$$).`;
-
-                const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                    method: "POST",
+                const prompt = `Generate a ${currentLevel === 1 ? 'foundation' : currentLevel === 2 ? 'standard' : 'advanced'} trigonometry problem in JSON with problem, solution.`;
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${apiKey}`
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: "gpt-4o-mini",
-                        messages: [{ role: "user", content: prompt }],
-                        response_format: { type: "json_object" }
+                        model: 'gpt-4o-mini',
+                        messages: [{ role: 'user', content: prompt }],
+                        response_format: { type: 'json_object' }
                     })
                 });
 
-                const resData = await response.json();
-                const aiResult = JSON.parse(resData.choices[0].message.content);
-
-                trigData[currentLevel].problem = aiResult.problem;
-                trigData[currentLevel].hints = [aiResult.hint1, aiResult.hint2, aiResult.hint3];
-                trigData[currentLevel].solution = aiResult.solution;
-
+                const data = await response.json();
+                const result = JSON.parse(data.choices[0].message.content);
+                trigData[currentLevel].problem = result.problem;
+                trigData[currentLevel].solution = result.solution;
                 renderCurrentContent();
             } catch (err) {
-                alert("Error connecting to API. Check console or key.");
                 console.error(err);
+                alert('Could not generate a problem from the API. Demo fallback is active.');
             } finally {
-                spinner.classList.add('hidden');
+                btn.innerText = oldText;
+                btn.disabled = false;
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
             switchLevel(1);
+            onControlsChange();
         });
     </script>
 </body>
 </html>
-
